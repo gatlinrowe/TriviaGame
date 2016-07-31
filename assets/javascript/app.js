@@ -31,10 +31,22 @@ $(document).ready(function() {
 			else {
 			quiz();
 			}
-		}, 2000);
+		}, 5000);
 
 	}
 	function quiz(){
+		var count =30;
+		var counter=setInterval(timer, 1000);
+		
+		function timer() {
+			count=count-1;
+			if (count <=0){
+				clearInterval(counter);
+				timesUp++;
+				gotIt("Times Up");
+			}
+			$("#timer").html(count + " secs");
+		}
 		currentQuestion++;
 		console.log("question #" +currentQuestion);
 		correctAnswer = questions[currentQuestion].correctAnswer;
@@ -47,6 +59,7 @@ $(document).ready(function() {
 		$("#4").html("<p>"+questions[currentQuestion].answer4+"</p>");
 		
 		$(".answer").unbind().click( function() {
+			clearInterval(counter);
 			console.log("answer selected:"+$(this).attr("id"));
 			if ($(this).attr("id") === correctAnswer) {
 				//gotIt = "CORRECT";
